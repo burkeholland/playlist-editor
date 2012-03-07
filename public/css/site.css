@@ -1,0 +1,124 @@
+
+	body {
+		background-image: url("../images/background-grey.png");
+		background-repeat: repeat-x;
+	}
+
+
+	.container {
+		margin-top: 10px;
+		padding: 20px;
+		background-color: white;
+		border-radius: 20px;
+	}
+	
+	header {
+		text-align: right;
+	}
+	
+    .track-info
+   {
+        margin: 5px;
+		padding: 10px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+	.edit
+   {
+        margin: 5px;
+		padding: 10px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+		background-color: lightgray;
+    }
+
+	.edit dl {
+		margin-left: 40px;
+	}
+
+	.edit dt {
+		padding-top: 5px;
+	}
+	
+	.edit input {
+		width: 325px;
+	}
+
+    dl
+    {
+        margin: 10px 0;
+        padding: 0;
+        min-width: 0;
+    }
+    
+	dt, dd
+    {
+        float: left;
+        margin: 0;
+        padding: 0;
+
+    }
+    
+	dt
+    {
+		margin-right: 10px;
+        clear: left;
+        text-align: right;
+        opacity: 0.6;
+        width: 80px;
+	 }
+	
+	.dt{
+		margin-top: 5px;
+	}
+	
+	.track dt {
+			width: 70px;
+			text-align: right;
+	}
+	
+	.audio {
+		margin: 10px 0px 0px 20px;
+	}
+	
+	.track dd {
+		padding-top: 2px;
+	}
+	
+	.album-art {
+		-webkit-box-reflect:
+		  below 1px 
+		-webkit-gradient(linear, left top, left bottom, from(transparent), 
+		  color-stop(0.8, transparent), 
+		  to(rgba(255, 255, 255, 0.5)));
+	}
+	        
+    .edit-buttons
+    {
+		margin-left: 20px;
+        text-align: right;
+        padding: 5px;
+        min-width: 100px;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+    .k-toolbar, #listview, .k-pager-wrap
+    {
+        margin: 0 auto;
+        -webkit-border-radius: 11px;
+        -moz-border-radius: 11px;
+        border-radius: 11px;s
+    }
+   
+	span.k-invalid-msg
+   {
+       position: absolute;
+       margin-left: 140px;
+       margin-top: -26px;
+   }

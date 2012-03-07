@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Album:</b>
+  <%= @playlist.album %>
+</p>
+
+<p>
+  <b>Artist:</b>
+  <%= @playlist.artist %>
+</p>
+
+<p>
+  <b>Album art url:</b>
+  <%= @playlist.album_art_url %>
+</p>
+
+<p>
+  <b>Track audio url:</b>
+  <%= @playlist.track_audio_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_playlist_path(@playlist) %> |
+<%= link_to 'Back', playlists_path %>

@@ -1,0 +1,31 @@
+<h1>Listing musics</h1>
+
+<table>
+  <tr>
+    <th>Album</th>
+    <th>Artist</th>
+    <th>Album art url</th>
+    <th>Track</th>
+    <th>Track audio url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @musics.each do |music| %>
+  <tr>
+    <td><%= music.album %></td>
+    <td><%= music.artist %></td>
+    <td><%= music.album_art_url %></td>
+    <td><%= music.track %></td>
+    <td><%= music.track_audio_url %></td>
+    <td><%= link_to 'Show', music %></td>
+    <td><%= link_to 'Edit', edit_music_path(music) %></td>
+    <td><%= link_to 'Destroy', music, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Music', new_music_path %>

@@ -1,0 +1,32 @@
+  <div class="track-info">
+    <div class="row">
+      <div class="span2">
+	   <img src="${album_art_url}" class="album-art" width="200" height="200" />
+	  </div>
+	  <div class="span4">
+	    <div class="row track">
+	      <div>
+		   <dl>
+		     <dt>Album:</dt>
+			 <dd>${album}</dd>
+			 <dt>Artist:</dt>
+			 <dd>${artist}</dd>
+			</dl>
+		   </div>
+		 </div>
+	    <div class="row">
+	  <div class="audio">
+	    <h3>${track}</h3>
+			<audio controls="controls">
+			   <source src="${track_mp3_url}" type="audio/mp3" />
+			      <a href="${track_mp3_url}">${track_mp3_url}</a>	
+			</audio>
+	  </div>
+	</div>
+  <div class="row edit-buttons">
+    <a class="k-button k-button-icontext k-edit-button" href="\#" data-bind="click: edit" ><span class="k-icon k-edit"></span>Edit</a>
+    <a class="k-button k-button-icontext k-delete-button" href="\#" data-bind="click: destroy"><span class="k-icon k-delete"></span>Delete</a>
+    </div>
+   </div>
+  </div>
+ </div>

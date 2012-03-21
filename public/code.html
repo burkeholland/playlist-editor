@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ListView MVVM</title>
+	<link href="http://cdn.kendostatic.com/2012.1.229/styles/kendo.common.min.css" type="text/css" rel="stylesheet" />
+	<link href="http://cdn.kendostatic.com/2012.1.229/styles/kendo.silver.min.css" type="text/css" rel="stylesheet" />
+	<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/site.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+  </head>
+  <body>
+	
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				<header>
+					<h1>Playlist Editor</h1>
+				</header>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span5"><h2>Create New</h2>
+				<div class="create">
+					<dl>
+						<dt>Album Name</dt>
+						<dd><input type="text" required="required" id="albumName" data-bind="value: album"/>
+						<dt>Album Art</dt>
+						<dd><input type="text" id="albumArt" data-bind="value: album_art_url">
+						<dt>Artist</dt>
+						<dd><input type="text" name="artist" data-bind="value: artist" id="artist"></dd>
+						<dt>Track Name</dt>
+						<dd><input type="text" name="trackName" data-bind="value: track" id="trackName"></dd>
+						<dt>Track MP3</dt>
+						<dd><input type="text" name="Track MP3" data-bind="value: track_mp3_url" id="Track MP3">
+						<dt>&nbsp;</dt>
+						<dd><a class="k-button k-button-icontext k-edit-button" data-bind="event: {click: create}" href="\\#" ><span class="k-icon k-add"></span>Add Track</a></dd>
+					</dl>
+				</div>
+				<div class="track">
+					
+				</div>
+			</div>
+			<div class="span7">
+				<h2>Tracks</h2>
+				<div id="listview"></div>
+			</div>
+		</div>
+	</div>
+	
+  </body>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" ></script>
+	<script src="http://cdn.kendostatic.com/2012.1.229/js/kendo.all.min.js"></script>
+	
+	<script type="text/x-kendo-tmpl" id="template">	
+		<div class="track-info">
+			<div class="row">
+            	<div class="span2">
+					<img src="${album_art_url}" class="album-art" width="200" height="200" />
+				</div>
+				<div class="span4">
+					<div class="row track">
+						<div>
+							<dl>
+								<dt>Album:</dt>
+								<dd>${album}</dd>
+								<dt>Artist:</dt>
+								<dd>${artist}</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="audio">
+						<h3>${track}</h3>
+						<audio controls="controls">
+							  	<source src="${track_mp3_url}" type="audio/mp3" />
+							  	Your browser does not support the audio element.
+							</audio>
+						</div>
+					</div>
+					<div class="row edit-buttons">
+		                <a class="k-button k-button-icontext k-edit-button" href="\\#" data-event="edit"><span class="k-icon k-edit"></span>Edit</a>
+		                <a class="k-button k-button-icontext k-delete-button" href="\\#" data-event="destroy"><span class="k-icon k-delete"></span>Delete</a>
+		            </div>
+				</div>
+	      </div>
+		</div>
+	</script>
+	
+	<script type="text/x-kendo-tmpl" id="editTemplate">
+      	<div class="else edit">
+			<div class="row">
+				<div class="span6">
+					<div class="row track">
+						<div>
+							<dl>
+								<dt>Album:</dt>
+								<dd><input data-bind="value: album" /></dd>
+								<dt>Album Art:</dt>
+								<dd><input data-bind="value: album_art_url" /></dd>
+								<dt>Artist:</dt>
+								<dd><input data-bind="value: artist" /></dd>
+								<dt>Track:</dt>
+								<dd><input data-bind="value: track" /></dd>
+								<dt>Track MP3:</dt>
+								<dd><input data-bind="value: track_mp3_url" /></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row edit-buttons">
+						<a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span>Save</a>
+		               <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span>Cancel</a>
+		            </div>
+				</div>
+	      </div>
+		</div>
+   </script>
+	
+	<script>
+		
+	var ds = new kendo.data.DataSource({
+		transport: {
+			read: "tracks.json",
+			update: {
+				url: "tracks.json",
+				type: "PUT"
+			},
+			destroy: {
+				url: "tracks.json",
+				type: "DELETE"
+			},
+			create: {
+				url: "tracks.json",
+				type: "POST"
+			}
+		},
+		schema: {
+			model: {
+				id: "id"
+			},
+			fields: {
+				album: { required: true },
+				album_art_url: "album_art_url",
+				artist: "artist",
+				track: "track",
+				track_mp3_url: "track_mp3_url",
+			}
+		},
+		pageSize: 6
+	});
+		
+	var listView = $("#listview").kendoListView({
+	    	template: kendo.template($("#template").html()),
+			editTemplate: kendo.template($("#editTemplate").html()),
+	        dataSource: ds
+	
+	    	// edit button click
+			}).delegate(".k-edit-button", "click", function(e) {
+				listView.edit($(this).closest(".track-info"));	
+				e.preventDefault();
+		
+			// save button click
+			}).delegate(".k-update-button", "click", function(e) {
+				listView.save();
+				e.preventDefault();
+			
+			// delete button click
+			}).delegate(".k-delete-button", "click", function(e) {
+				listView.remove($(this).closest(".track-info"));
+	            e.preventDefault();
+
+		}).data("kendoListView");
+		
+	$("#pager").kendoPager({
+		dataSource: ds
+	});
+	
+	var viewModel = kendo.observable({
+		
+		album: null,
+		artist: null,
+		track: null,
+		album_art_url: null,
+		track_mp3_url: null,
+		
+		create: function(e) {
+			
+			var newItem = new kendo.data.Model({ 
+				album: this.get("album"), 
+				album_art_url: this.get("album_art_url"), 
+				artist: this.get("artist"), 
+				track: this.get("track"),   
+				track_mp3_url: this.get("track_mp3_url"),
+				dirty: true });
+			
+			ds.add(newItem);
+			
+			// clear out the fields
+			this.set("album", "");
+			this.set("artist", "");
+			this.set("track", "");
+			this.set("album_art_url", "");
+			this.set("track_mp3_url", "");
+			
+			e.preventDefault();
+		}
+	});
+	
+	kendo.bind(document.body.children, viewModel);
+	
+	</script>
+
+</html>

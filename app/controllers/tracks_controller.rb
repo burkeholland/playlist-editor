@@ -40,7 +40,8 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
-    @track = Track.new(params[:track])
+    @track = Track.new(:album => params[:album], :artist => params[:artist], :track => params[:track],
+    :album_art_url => params[:album_art_url], :track_mp3_url => params[:track_mp3_url])
 
     respond_to do |format|
       if @track.save

@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Item Locate Menu</title>
+    <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="Scripts/kendo.mobile.min.js" type="text/javascript"></script>        
+    <link href="Styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" /> 
+    <link href="Styles/site.css" rel="stylesheet" type="text/css" />       
+</head>
+<body>
+    <div id="device-wrapper">
+        <div id="mobile-application-container">        
+        <div data-role="view" id="searchView" data-layout="mainLayout" data-title="Item Locate">                                                
+            <div class="content">
+                <label for="txtUpc">UPC</label>
+                <input id="txtUpc" maxlength="13" placeholder="Enter UPC" />
+
+                <a id="searchButton" data-icon="search" href="resultsView" data-role="button">Search</a>
+            </div>
+        </div>
+
+        <div data-role="view" id="resultsView" data-id="resultsView" data-show="hello" data-layout="mainLayout" data-title="Item Locate Results">
+             <ul id="resultsListview" data-role="listview"></ul>        
+        </div>
+
+        <div data-role="layout" data-id="mainLayout">
+            <header data-role="header">
+                <div id="mainNavbar" data-role="navbar">
+                    <span data-role="view-title"></span>
+                </div>
+            </header> 
+            <footer data-role="footer">
+                <div id="mainTabstrip" data-role="tabstrip">
+                    <a href="#searchView" data-icon="search">Search</a>
+                    <a href="#resultsView" data-icon="results">Results</a>
+                </div>
+            </footer>            
+        </div>
+        </div>
+    </div>
+        
+    <script type="text/javascript">
+        var locationDetails;
+
+        window.app = new kendo.mobile.Application(document.body);
+
+		// bind to the show event
+		app.bind("viewShow", function(e) {
+			console.log(e.view);
+			console.log(e);
+		});
+
+		function hello() {
+			console.log("hello");
+		}
+		//************* ADDED BY BURKE ***************************
+		// this is the event called when the results view is shown
+		// *******************************************************
+		getResults = function() {
+
+			var upcNum = $('#txtUpc').val();
+
+            // TODO - Bind the data to the ItemLocate Service.
+            locationDetails = getLocationDetails(upcNum);
+      
+            $('#resultsListview').kendoMobileListView({
+                dataSource: locationDetails,
+                template: $('#resultsListViewTemplate').html()
+            });
+		}      
+        
+        function getLocationDetails(upcNum) {                        
+            return upcNum.length > 0 
+                ?   [
+                        { locId: 94, locShortNme: 'C2', locNme: 'CAMILLUS, NY', wkOhQty: 8, phoneNum: '315-484-9124', storCityAddr: 'CAMILLUS', storStatAddr: 'NY', tckPriceAmt: 90.00 },
+                        { locId: 15, locShortNme: 'UT', locNme: 'UNIONTOWN, PA', wkOhQty: 7, phoneNum: '724-439-2597', storCityAddr: 'UNIONTOWN', storStatAddr: 'PA', tckPriceAmt: 90.00 },
+                        { locId: 40, locShortNme: 'FK', locNme: 'FRACKVILL, PA', wkOhQty: 7, phoneNum: '570-874-4300', storCityAddr: 'FRACKVILLE', storStatAddr: 'PA', tckPriceAmt: 90.00 },
+                        { locId: 3, locShortNme: 'HG', locNme: 'HAGERSTWN, MD', wkOhQty: 6, phoneNum: '301-582-3900', storCityAddr: 'HAGERSTOWN', storStatAddr: 'MD', tckPriceAmt: 90.00 },
+                        { locId: 2, locShortNme: 'HN', locNme: 'HANOVER, PA', wkOhQty: 5, phoneNum: '717-632-7791', storCityAddr: 'HANOVER', storStatAddr: 'PA', tckPriceAmt: 90.00 }
+                    ]
+                :
+                    [];            
+        }
+    </script>
+    
+    <script type="text/x-kendo-template" id="resultsListViewTemplate">
+        <div class="listview-template">        
+            <h3>${locId} ${locShortNme} ${locNme}</h3>
+            <ul>
+                <li>${storCityAddr}, ${storStatAddr}</li>
+                <li>${phoneNum}</li>
+                <li>Qty: ${wkOhQty}</li>
+                <li>Price: ${tckPriceAmt}</li>
+            </ul>
+        </div>
+    </script>      
+</body>
+</html>

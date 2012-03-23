@@ -68,7 +68,7 @@
         clear: left;
         text-align: right;
         opacity: 0.6;
-        width: 80px;
+        width: 100px;
 	 }
 	
 	.dt{
@@ -125,4 +125,12 @@
 
 table th {
 	text-align: left;
+}
+
+.k-edit {
+	margin-left: 160px;
+}
+
+.save {
+	margin-left: 290px;
 }

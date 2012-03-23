@@ -6,7 +6,7 @@ class TracksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @tracks.to_json(:methods => [:edit]) }
+      format.json { render :json => @tracks }
     end
   end
 
